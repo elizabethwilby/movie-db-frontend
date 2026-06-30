@@ -21,7 +21,7 @@ function MovieList({ movies, deleteMovie }) {
       <button onClick={() => setSortMovies(!sortMovies)}>
         Sort A-Z
       </button>
-
+    <div className='movie-grid'>
       {displayedMovies.map((movie) => (
         <MovieCard
           key={movie.id}
@@ -29,6 +29,7 @@ function MovieList({ movies, deleteMovie }) {
           deleteMovie={deleteMovie}
         />
       ))}
+      </div>
     </div>
   );
 }
