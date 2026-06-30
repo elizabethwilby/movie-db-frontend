@@ -6,7 +6,9 @@ function MovieCard({ movie, deleteMovie }) {
       <div className='poster-flip'>
         <div className='poster-inner'>
           <div className='poster-front'>
-            <img src={movie.image} alt={`${movie.title} poster`} />
+            <img src={movie.image} 
+              alt={`${movie.title} poster`}
+             />
           </div>
 
           <div className='poster-back'>
@@ -14,10 +16,8 @@ function MovieCard({ movie, deleteMovie }) {
           </div>
         </div>
       </div>
-
-      <p>Rating: {movie.rating}/5</p>
-      <p>Genre: {movie.genre}</p>
-
+        <p>Rating: {movie.rating}/5</p>
+        <p>Genre: {movie.genre}</p>
       <button onClick={() => deleteMovie(movie.id)}>Delete</button>
     </div>
   );

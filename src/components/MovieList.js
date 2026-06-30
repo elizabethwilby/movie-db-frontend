@@ -15,13 +15,14 @@ function MovieList({ movies, deleteMovie }) {
     : filteredMovies;
 
   return (
-    <div>
-      <SearchBar search={search} setSearch={setSearch} />
+  <div>
+    <SearchBar search={search} setSearch={setSearch} />
 
-      <button onClick={() => setSortMovies(!sortMovies)}>
-        Sort A-Z
-      </button>
-    <div className='movie-grid'>
+    <button onClick={() => setSortMovies(!sortMovies)}>
+      Sort A-Z
+    </button>
+
+    <div className="movie-grid">
       {displayedMovies.map((movie) => (
         <MovieCard
           key={movie.id}
@@ -29,9 +30,9 @@ function MovieList({ movies, deleteMovie }) {
           deleteMovie={deleteMovie}
         />
       ))}
-      </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default MovieList;

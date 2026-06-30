@@ -1,13 +1,11 @@
-import MovieList from "./MovieList";
+import MovieList from './MovieList';
 
 function AllMovies({ movies, deleteMovie }) {
   return (
-    <div>
-      <MovieList
-        movies={movies}
-        deleteMovie={deleteMovie}
-      />
-    </div>
+    <MovieList
+      movies={movies}
+      deleteMovie={deleteMovie}
+    />
   );
 }
 
