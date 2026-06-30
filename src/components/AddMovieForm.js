@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function AddMovieForm({ addMovie }) {
+function AddMovieForm({ addMovie, movies }) {
   const [formData, setFormData] = useState({
     title: '',
     genre: '',
@@ -18,6 +18,17 @@ function AddMovieForm({ addMovie }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const movieExists = movies.some(
+      (movie) => 
+        movie.title.trim().toLowerCase() ===
+        formData.title.trim().toLowerCase()
+    );
+
+    if (movieExists) {
+      alert("This movie already exists in the database!");
+      return;
+    }
 
     fetch('http://localhost:3000/movies', {
       method: 'POST',
@@ -63,7 +74,7 @@ function AddMovieForm({ addMovie }) {
       <input
         type='text'
         name='rating'
-        placeholder='Rating'
+        placeholder='Rate 1-5'
         value={formData.rating}
         onChange={handleChange}
       />

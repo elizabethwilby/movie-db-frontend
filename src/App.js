@@ -21,7 +21,7 @@ function App() {
   }
 
   function deleteMovie(id) {
-    fetch("http://localhost:3000/movies/${id}", {
+    fetch(`http://localhost:3000/movies/${id}`, {
       method: 'DELETE',
     });
 
@@ -43,7 +43,7 @@ function App() {
         />
         <Route
           path='/add-movie'
-          element={<AddMovieForm addMovie={addMovie} />}
+          element={<AddMovieForm addMovie={addMovie} movies={movies}  />}
         />
       </Routes>
     </div>
