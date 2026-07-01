@@ -1,10 +1,10 @@
 import MovieList from './MovieList';
 
-function AllMovies({ movies, deleteMovie }) {
+function AllMovies({ movies, onDeleteMovie }) {
   return (
     <MovieList
       movies={movies}
-      deleteMovie={deleteMovie}
+      onDeleteMovie={onDeleteMovie}
     />
   );
 }

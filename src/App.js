@@ -16,11 +16,11 @@ function App() {
       .then((data) => setMovies(data));
   }, []);
 
-  function addMovie(newMovie) {
-    setMovies([...movies, newMovie]);
+  function onAddMovie(newMovie) {
+    setMovies(prev => [...prev, newMovie]);
   }
 
-  function deleteMovie(id) {
+  function onDeleteMovie(id) {
   fetch(`http://localhost:3000/movies/${id}`, {
     method: 'DELETE',
   })
@@ -31,7 +31,7 @@ function App() {
       return response.text();
     })
     .then(() => {
-      setMovies(movies.filter((movie) => movie.id !== id));
+      setMovies(prev => prev.filter((movie) => movie.id !== id))
     })
     .catch(error => {
       console.error('Delete failed, logic skipped:', error);
@@ -45,15 +45,15 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<TopMovies movies={movies} deleteMovie={deleteMovie} />}
+          element={<TopMovies movies={movies} onDeleteMovie={onDeleteMovie} />}
         />
         <Route
           path='/movies'
-          element={<AllMovies movies={movies} deleteMovie={deleteMovie} />}
+          element={<AllMovies movies={movies} onDeleteMovie={onDeleteMovie} />}
         />
         <Route
           path='/add-movie'
-          element={<AddMovieForm addMovie={addMovie} movies={movies} />}
+          element={<AddMovieForm onAddMovie={onAddMovie} movies={movies} />}
         />
       </Routes>
     </div>

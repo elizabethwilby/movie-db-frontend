@@ -2,7 +2,7 @@ import { useState } from 'react';
 import MovieCard from './MovieCard';
 import SearchBar from './Search';
 
-function MovieList({ movies, deleteMovie }) {
+function MovieList({ movies, onDeleteMovie }) {
   const [search, setSearch] = useState('');
   const [sortMovies, setSortMovies] = useState(false);
 
@@ -27,7 +27,7 @@ function MovieList({ movies, deleteMovie }) {
           <MovieCard
             key={movie.id}
             movie={movie}
-            deleteMovie={deleteMovie}
+            onDeleteMovie={onDeleteMovie}
           />
         ))}
       </div>

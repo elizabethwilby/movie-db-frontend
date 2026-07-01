@@ -13,6 +13,7 @@ Movie Database is a React single page application that allows users to browse, o
 * Add a new movie using a controlled form.
 * Delete movies from the collection.
 * Display movie posters with descriptive alt text.
+* Hover over a movie poster to flip the card and reveal its description.
 
 ## Technologies Used
 
@@ -57,10 +58,5 @@ Example movie object:
 }
 ```
 
-## Future Improvements
-
-* Edit existing movies
-* Filter by genre
-* Display average movie rating
-* Responsive mobile layout
-* Favorite movies feature
+## Credits
+* Movie poster images sourced from Wikipedia.

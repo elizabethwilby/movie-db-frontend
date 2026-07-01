@@ -1,4 +1,4 @@
-function MovieCard({ movie, deleteMovie }) {
+function MovieCard({ movie, onDeleteMovie }) {
   return (
     <div className='movie-card'>
       <h2>{movie.title}</h2>
@@ -18,7 +18,7 @@ function MovieCard({ movie, deleteMovie }) {
       </div>
         <p>Rating: {movie.rating}/5</p>
         <p>Genre: {movie.genre}</p>
-      <button onClick={() => deleteMovie(movie.id)}>Delete</button>
+      <button onClick={() => onDeleteMovie(movie.id)}>Delete</button>
     </div>
   );
 }
