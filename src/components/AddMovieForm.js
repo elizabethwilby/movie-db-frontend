@@ -30,12 +30,17 @@ function AddMovieForm({ addMovie, movies }) {
       return;
     }
 
+    const movieToSubmit = {
+      ...formData,
+      rating: Number(formData.rating)
+    };
+
     fetch('http://localhost:3000/movies', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(movieToSubmit)
     })
       .then((res) => res.json())
       .then((newMovie) => {

@@ -21,16 +21,26 @@ function App() {
   }
 
   function deleteMovie(id) {
-    fetch(`http://localhost:3000/movies/${id}`, {
-      method: 'DELETE',
+  fetch(`http://localhost:3000/movies/${id}`, {
+    method: 'DELETE',
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Delete request failed');
+      }
+      return response.text();
+    })
+    .then(() => {
+      setMovies(movies.filter((movie) => movie.id !== id));
+    })
+    .catch(error => {
+      console.error('Delete failed, logic skipped:', error);
     });
-
-    setMovies(movies.filter((movie) => movie.id !== id));
-  }
+}
 
   return (
     <div className='App'>
-      <h1>Movie Database</h1>
+      <h1>Plotboxd</h1>
       <NavBar />
       <Routes>
         <Route
@@ -43,11 +53,11 @@ function App() {
         />
         <Route
           path='/add-movie'
-          element={<AddMovieForm addMovie={addMovie} movies={movies}  />}
+          element={<AddMovieForm addMovie={addMovie} movies={movies} />}
         />
       </Routes>
     </div>
   );
-}
+} 
 
-export default App;
+  export default App;

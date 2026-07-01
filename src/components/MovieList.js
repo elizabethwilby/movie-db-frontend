@@ -15,24 +15,24 @@ function MovieList({ movies, deleteMovie }) {
     : filteredMovies;
 
   return (
-  <div>
-    <SearchBar search={search} setSearch={setSearch} />
-
-    <button onClick={() => setSortMovies(!sortMovies)}>
-      Sort A-Z
-    </button>
-
-    <div className="movie-grid">
-      {displayedMovies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          deleteMovie={deleteMovie}
-        />
-      ))}
+    <div>
+      <div className="search-row">
+        <SearchBar search={search} setSearch={setSearch} />
+        <button onClick={() => setSortMovies(!sortMovies)}>
+          Sort A-Z
+        </button>
+      </div>
+      <div className="movie-grid">
+        {displayedMovies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            deleteMovie={deleteMovie}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default MovieList;
