@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function AddMovieForm({ addMovie, movies }) {
+function AddMovieForm({ onAddMovie, movies }) {
   const [formData, setFormData] = useState({
     title: '',
     genre: '',
@@ -35,7 +35,7 @@ function AddMovieForm({ addMovie, movies }) {
       rating: Number(formData.rating)
     };
 
-    fetch('http://localhost:3000/movies', {
+    fetch(`${process.env.REACT_APP_API_URL}/movies`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ function AddMovieForm({ addMovie, movies }) {
     })
       .then((res) => res.json())
       .then((newMovie) => {
-        addMovie(newMovie);
+        onAddMovie(newMovie);
 
         setFormData({
           title: '',

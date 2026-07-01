@@ -11,7 +11,7 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/movies")
+    fetch(`${process.env.REACT_APP_API_URL}/movies`)
       .then((res) => res.json())
       .then((data) => setMovies(data));
   }, []);
@@ -21,7 +21,7 @@ function App() {
   }
 
   function onDeleteMovie(id) {
-  fetch(`http://localhost:3000/movies/${id}`, {
+  fetch(`${process.env.REACT_APP_API_URL}/movies/${id}`, {
     method: 'DELETE',
   })
     .then(response => {
