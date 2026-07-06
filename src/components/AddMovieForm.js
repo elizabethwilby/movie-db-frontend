@@ -44,6 +44,7 @@ function AddMovieForm({ onAddMovie, movies }) {
     })
       .then((res) => res.json())
       .then((newMovie) => {
+        alert('Successful!!');
         onAddMovie(newMovie);
 
         setFormData({
@@ -52,8 +53,11 @@ function AddMovieForm({ onAddMovie, movies }) {
           rating: '',
           image: '',
           description: ''
-        });
-      });
+        })
+        .catch(error => {
+          console.error('add failed', error)
+        })
+      })
   }
 
   return (

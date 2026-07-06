@@ -1,6 +1,6 @@
 import MovieList from './MovieList';
 
-function TopMovies({ movies, onDeleteMovie }) {
+function TopMovies({ movies, onDeleteMovie, startEdit }) {
   const topMovies = movies.filter(
     (movie) => movie.rating === 5 
   );
@@ -9,6 +9,7 @@ function TopMovies({ movies, onDeleteMovie }) {
     <MovieList
       movies={topMovies}
       onDeleteMovie={onDeleteMovie}
+      startEdit={startEdit}
     />
   );
 }
