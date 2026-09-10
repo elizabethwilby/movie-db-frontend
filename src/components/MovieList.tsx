@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import MovieCard from './MovieCard';
 import SearchBar from './Search';
+import { Movie } from "../types"
 
-function MovieList({ movies, onDeleteMovie, startEdit }) {
-  const [search, setSearch] = useState('');
-  const [sortMovies, setSortMovies] = useState(false);
+interface MovieListProps { 
+  movies: Movie[]
+  onDeleteMovie: (id: string) => void
+  startEdit: (movie: Movie) => void
+}
+
+function MovieList({ movies, onDeleteMovie, startEdit }: MovieListProps) {
+  const [search, setSearch] = useState<string>('');
+  const [sortMovies, setSortMovies] = useState<boolean>(false);
 
   const filteredMovies = movies.filter((movie) => 
     movie.title.toLowerCase().includes(search.toLowerCase()) ||
