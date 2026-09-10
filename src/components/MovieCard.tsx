@@ -1,6 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import { Movie } from "../types"
 
-function MovieCard({ movie, onDeleteMovie, startEdit }) {
+interface MovieCardProps {
+  movie: Movie
+  onDeleteMovie: (id: string) => void
+  startEdit: (movie: Movie) => void
+}
+
+function MovieCard({ movie, onDeleteMovie, startEdit }: MovieCardProps) {
   const navigate = useNavigate();
 
   return (

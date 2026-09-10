@@ -6,10 +6,11 @@ import TopMovies from './components/TopMovies';
 import AllMovies from './components/AllMovies';
 import AddMovieForm from './components/AddMovieForm';
 import EditMovieForm from './components/EditMovieForm';
+import { Movie } from './types';
 
 function App() {
-  const [movies, setMovies] = useState([]);
-  const [editingMovie, setEditingMovie] = useState(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [editingMovie, setEditingMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/movies`)
@@ -17,15 +18,15 @@ function App() {
       .then((data) => setMovies(data));
   }, []);
 
-  function onAddMovie(newMovie) {
+  function onAddMovie(newMovie: Movie) {
     setMovies(prev => [...prev, newMovie]);
   }
 
-  function startEdit(movie) {
+  function startEdit(movie: Movie) {
     setEditingMovie(movie);
   }
 
-  function onEditMovie(id, updatedData) {
+  function onEditMovie(id: string, updatedData: Partial<Movie>) {
     fetch(`${process.env.REACT_APP_API_URL}/movies/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -39,7 +40,7 @@ function App() {
       });
   }
 
-  function onDeleteMovie(id) {
+  function onDeleteMovie(id: string) {
     fetch(`${process.env.REACT_APP_API_URL}/movies/${id}`, {
       method: 'DELETE',
     })
