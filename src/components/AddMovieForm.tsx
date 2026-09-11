@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Movie } from '../types';
 
 interface MovieFormData {
@@ -15,24 +15,9 @@ interface AddMovieFormProps {
 }
 
 function AddMovieForm({ onAddMovie, movies }: AddMovieFormProps) {
-  const [formData, setFormData] = useState<MovieFormData>({
-    title: '',
-    genre: '',
-    rating: '',
-    image: '',
-    description: ''
-  });
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<MovieFormData>();
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  function onSubmit(formData: MovieFormData) {
     const movieExists = movies.some(
       (movie) =>
         movie.title.trim().toLowerCase() ===
@@ -60,14 +45,7 @@ function AddMovieForm({ onAddMovie, movies }: AddMovieFormProps) {
       .then((newMovie) => {
         alert('Successful!!');
         onAddMovie(newMovie);
-
-        setFormData({
-          title: '',
-          genre: '',
-          rating: '',
-          image: '',
-          description: ''
-        });
+        reset();
       })
       .catch(error => {
         console.error('add failed', error)
@@ -75,14 +53,26 @@ function AddMovieForm({ onAddMovie, movies }: AddMovieFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Add Movie</h2>
 
-      <input type='text' name='title' placeholder='Title' value={formData.title} onChange={handleChange} />
-      <input type='text' name='genre' placeholder='Genre' value={formData.genre} onChange={handleChange} />
-      <input type='text' name='rating' placeholder='Rate 1-5' value={formData.rating} onChange={handleChange} />
-      <input type='text' name='image' placeholder='Poster URL' value={formData.image} onChange={handleChange} />
-      <textarea name='description' placeholder='Description' value={formData.description} onChange={handleChange} />
+      <input type='text' placeholder='Title' {...register('title', { required: 'Title is required' })} />
+      {errors.title && <span className='error'>{errors.title.message}</span>}
+
+      <input type='text' placeholder='Genre' {...register('genre', { required: 'Genre is required' })} />
+      {errors.genre && <span className='error'>{errors.genre.message}</span>}
+
+      <input type='text' placeholder='Rate 1-5' {...register('rating', {
+        required: 'Rating is required',
+        pattern: { value: /^[1-5]$/, message: 'Rating must be a number from 1 to 5' }
+      })} />
+      {errors.rating && <span className='error'>{errors.rating.message}</span>}
+
+      <input type='text' placeholder='Poster URL' {...register('image', { required: 'Image URL is required' })} />
+      {errors.image && <span className='error'>{errors.image.message}</span>}
+
+      <textarea placeholder='Description' {...register('description', { required: 'Description is required' })} />
+      {errors.description && <span className='error'>{errors.description.message}</span>}
 
       <button type='submit'>Add Movie</button>
     </form>
