@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Movie } from '../types';
 
@@ -17,47 +17,48 @@ interface EditMovieFormProps {
 
 function EditMovieForm({ editMovie, onEditMovie }: EditMovieFormProps) {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<MovieFormData>({
-    title: editMovie?.title || '',
-    genre: editMovie?.genre || '',
-    rating: editMovie?.rating.toString() || '',
-    image: editMovie?.image || '',
-    description: editMovie?.description || ''
+  const { register, handleSubmit, formState: { errors } } = useForm<MovieFormData>({
+    defaultValues: {
+      title: editMovie?.title || '',
+      genre: editMovie?.genre || '',
+      rating: editMovie?.rating.toString() || '',
+      image: editMovie?.image || '',
+      description: editMovie?.description || ''
+    }
   });
-  const [submitted, setSubmitted] = useState<boolean>(false);
 
   if (!editMovie) {
     return <p>No movie selected to edit. Go back and click Edit on a movie card.</p>;
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  function onSubmit(formData: MovieFormData) {
     const movieToSubmit = { ...formData, rating: Number(formData.rating) };
     onEditMovie(editMovie!.id, movieToSubmit);
-    setSubmitted(true);
-  }
-
-  if (submitted) {
-    return (
-      <div>
-        <p>Movie updated!</p>
-        <button onClick={() => navigate('/movies')}>Back to All Movies</button>
-      </div>
-    );
+    navigate('/movies');
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Edit Movie</h2>
-      <input type='text' name='title' value={formData.title} onChange={handleChange} />
-      <input type='text' name='genre' value={formData.genre} onChange={handleChange} />
-      <input type='text' name='rating' value={formData.rating} onChange={handleChange} />
-      <input type='text' name='image' value={formData.image} onChange={handleChange} />
-      <textarea name='description' value={formData.description} onChange={handleChange} />
+
+      <input type='text' {...register('title', { required: 'Title is required' })} />
+      {errors.title && <span className='error'>{errors.title.message}</span>}
+
+      <input type='text' {...register('genre', { required: 'Genre is required' })} />
+      {errors.genre && <span className='error'>{errors.genre.message}</span>}
+
+      <input type='text' {...register('rating', {
+        required: 'Rating is required',
+        pattern: { value: /^[1-5]$/, message: 'Rating must be a number from 1 to 5' }
+      })} />
+      {errors.rating && <span className='error'>{errors.rating.message}</span>}
+
+      <input type='text' {...register('image', { required: 'Image URL is required' })} />
+      {errors.image && <span className='error'>{errors.image.message}</span>}
+
+      <textarea {...register('description', { required: 'Description is required' })} />
+      {errors.description && <span className='error'>{errors.description.message}</span>}
+
       <button type='submit'>Submit Edit</button>
     </form>
   );
